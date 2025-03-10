@@ -1,0 +1,49 @@
+<routes>
+    <!-- Vehicle Type Definition -->
+    <vType id="vtypeauto" accel="5" decel="10" sigma="0.0" length="4"
+           minGap="0" maxSpeed="36" color="1,0,0" probability="1"
+           carFollowModel="CC" tauEngine="0.5" omegaN="0.2" xi="1" c1="0.5"
+           lanesCount="4" ccAccel="4" ploegKp="0.2" ploegKd="0.7"
+           ploegH="0.5" />
+
+    <!-- Route Definitions -->
+    <route id="route_0" edges="end1_junction junction_end4"/>
+    <route id="route_1" edges="end1_junction junction_end3"/>
+    <route id="route_2" edges="end1_junction junction_end2"/>
+    <route id="route_3" edges="end2_junction junction_end1"/>
+    <route id="route_4" edges="end2_junction junction_end4"/>
+    <route id="route_5" edges="end2_junction junction_end3"/>
+    <route id="route_6" edges="end3_junction junction_end2"/>
+    <route id="route_7" edges="end3_junction junction_end1"/>
+    <route id="route_8" edges="end3_junction junction_end4"/>
+    <route id="route_9" edges="end4_junction junction_end3"/>
+    <route id="route_10" edges="end4_junction junction_end2"/>
+    <route id="route_11" edges="end4_junction junction_end1"/>
+
+    <!-- Adding Vehicles -->
+    <vehicle id="veh_0" type="vtypeauto" route="route_0" depart="0" />
+    <vehicle id="veh_1" type="vtypeauto" route="route_1" depart="1" />
+    <vehicle id="veh_2" type="vtypeauto" route="route_2" depart="2" />
+    <vehicle id="veh_3" type="vtypeauto" route="route_3" depart="3" />
+    <vehicle id="veh_4" type="vtypeauto" route="route_4" depart="4" />
+    <vehicle id="veh_5" type="vtypeauto" route="route_5" depart="5" />
+    <vehicle id="veh_6" type="vtypeauto" route="route_6" depart="6" />
+    <vehicle id="veh_7" type="vtypeauto" route="route_7" depart="7" />
+    <vehicle id="veh_8" type="vtypeauto" route="route_8" depart="8" />
+    <vehicle id="veh_9" type="vtypeauto" route="route_9" depart="9" />
+    <vehicle id="veh_10" type="vtypeauto" route="route_10" depart="10" />
+    <vehicle id="veh_11" type="vtypeauto" route="route_11" depart="11" />
+    <vehicle id="veh_12" type="vtypeauto" route="route_0" depart="12" />
+    <vehicle id="veh_13" type="vtypeauto" route="route_1" depart="13" />
+    <vehicle id="veh_14" type="vtypeauto" route="route_2" depart="14" />
+    <vehicle id="veh_15" type="vtypeauto" route="route_3" depart="15" />
+    <vehicle id="veh_16" type="vtypeauto" route="route_4" depart="16" />
+    <vehicle id="veh_17" type="vtypeauto" route="route_5" depart="17" />
+    <vehicle id="veh_18" type="vtypeauto" route="route_6" depart="18" />
+    <vehicle id="veh_19" type="vtypeauto" route="route_7" depart="19" />
+    <vehicle id="veh_20" type="vtypeauto" route="route_8" depart="20" />
+    <vehicle id="veh_21" type="vtypeauto" route="route_9" depart="21" />
+    <vehicle id="veh_22" type="vtypeauto" route="route_10" depart="22" />
+    <vehicle id="veh_23" type="vtypeauto" route="route_11" depart="23" />
+
+</routes>
