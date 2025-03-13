@@ -1,6 +1,7 @@
 # Manually added
 .DS_Store
 .python-version
+.env
 
 
 # Byte-compiled / optimized / DLL files
