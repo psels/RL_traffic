@@ -1,0 +1,3 @@
+SUMO-GUI="/Users/arseneclaustre/sumo/bin/sumo-gui"
+SUMO="/Users/arseneclaustre/sumo/bin/sumo"
+SIMUL-CONFIG=Traditional_traffic/traditional_traffic.sumo.cfg
