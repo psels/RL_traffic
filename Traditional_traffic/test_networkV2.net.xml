@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<net>
+    <!-- Main 3x3 Road -->
+    <edge id="main_road_1" from="start" to="cross_1" numLanes="3" speed="13.89"/>
+    <edge id="main_road_2" from="cross_1" to="cross_2" numLanes="3" speed="13.89"/>
+    <edge id="main_road_3" from="cross_2" to="end" numLanes="3" speed="13.89"/>
+
+    <!-- First 2x2 Crossroad (1/3 down) -->
+    <edge id="cross_road_1a" from="cross_1_left" to="cross_1" numLanes="2" speed="11.11"/>
+    <edge id="cross_road_1b" from="cross_1" to="cross_1_right" numLanes="2" speed="11.11"/>
+
+    <!-- Second 2x2 Crossroad (2/3 down) -->
+    <edge id="cross_road_2a" from="cross_2_left" to="cross_2" numLanes="2" speed="11.11"/>
+    <edge id="cross_road_2b" from="cross_2" to="cross_2_right" numLanes="2" speed="11.11"/>
+
+    <!-- Junctions -->
+    <junction id="start" x="0" y="500" type="priority"/>
+    <junction id="cross_1" x="0" y="300" type="traffic_light"/>
+    <junction id="cross_1_left" x="-200" y="300" type="priority"/>
+    <junction id="cross_1_right" x="200" y="300" type="priority"/>
+    <junction id="cross_2" x="0" y="100" type="traffic_light"/>
+    <junction id="cross_2_left" x="-200" y="100" type="priority"/>
+    <junction id="cross_2_right" x="200" y="100" type="priority"/>
+    <junction id="end" x="0" y="0" type="priority"/>
+
+    <!-- Traffic Light Logic -->
+    <tlLogic id="cross_1" type="static" programID="0">
+        <phase duration="30" state="GGGrrrGGGrrr"/>
+        <phase duration="5" state="yyyrrryyyrrr"/>
+        <phase duration="30" state="rrrGGGrrrGGG"/>
+        <phase duration="5" state="rrryyyrrryyy"/>
+    </tlLogic>
+
+    <tlLogic id="cross_2" type="static" programID="0">
+        <phase duration="30" state="GGGrrrGGGrrr"/>
+        <phase duration="5" state="yyyrrryyyrrr"/>
+        <phase duration="30" state="rrrGGGrrrGGG"/>
+        <phase duration="5" state="rrryyyrrryyy"/>
+    </tlLogic>
+</net>
