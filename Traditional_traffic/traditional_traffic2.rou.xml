@@ -1,0 +1,122 @@
+<routes>
+    <!-- Vehicle Type Definition -->
+    <vType id="cautious" accel="2" decel="5" sigma="0.3" length="4"
+           minGap="1.5" maxSpeed="30" color="0,0,1" carFollowModel="Krauss"/>
+
+    <vType id="aggressive" accel="5" decel="10" sigma="1.2" length="4"
+           minGap="0.5" maxSpeed="40" color="1,0,0" carFollowModel="IDM"/>
+
+
+
+    <!-- Route Definitions -->
+    <!-- N > W -->
+    <route id="route_0" edges="end1_junction junction_end4"/>
+    <!-- N > S -->
+    <route id="route_1" edges="end1_junction junction_end3"/>
+    <!-- N > E -->
+    <route id="route_2" edges="end1_junction junction_end2"/>
+
+    <!-- W > N -->
+    <route id="route_3" edges="end2_junction junction_end1"/>
+    <!-- W > E -->
+    <route id="route_4" edges="end2_junction junction_end4"/>
+    <!-- W > S -->
+    <route id="route_5" edges="end2_junction junction_end3"/>
+
+    <!-- S > E -->
+    <route id="route_6" edges="end3_junction junction_end2"/>
+    <!-- S > N -->
+    <route id="route_7" edges="end3_junction junction_end1"/>
+    <!-- S > W -->
+    <route id="route_8" edges="end3_junction junction_end4"/>
+
+    <!-- W > S -->
+    <route id="route_9" edges="end4_junction junction_end3"/>
+    <!-- W > E -->
+    <route id="route_10" edges="end4_junction junction_end2"/>
+    <!-- W > N -->
+    <route id="route_11" edges="end4_junction junction_end1"/>
+
+
+
+    <!-- Adding Vehicles -->
+    <flow id="CNW" type="cautious" route="route_0" begin="0" end="600" vehsPerHour="25"/>
+    <flow id="ANW" type="aggressive" route="route_0" begin="0" end="600" vehsPerHour="25"/>
+
+    <flow id="ANS" type="cautious" route="route_1" begin="0" end="600" vehsPerHour="25"/>
+    <flow id="CNS" type="aggressive" route="route_1" begin="0" end="600" vehsPerHour="25"/>
+
+    <flow id="CNE" type="cautious" route="route_2" begin="0" end="600" vehsPerHour="300"/>
+    <flow id="ANE" type="aggressive" route="route_2" begin="0" end="600" vehsPerHour="300"/>
+
+    <flow id="CEN" type="cautious" route="route_3" begin="0" end="600" vehsPerHour="100"/>
+    <flow id="AEN" type="aggressive" route="route_3" begin="0" end="600" vehsPerHour="100"/>
+
+    <flow id="CEW" type="cautious" route="route_4" begin="0" end="600" vehsPerHour="100"/>
+    <flow id="AEW" type="aggressive" route="route_4" begin="0" end="600" vehsPerHour="100"/>
+
+    <flow id="CES" type="cautious" route="route_5" begin="0" end="600" vehsPerHour="100"/>
+    <flow id="AES" type="aggressive" route="route_5" begin="0" end="600" vehsPerHour="100"/>
+
+    <flow id="CSE" type="cautious" route="route_6" begin="0" end="600" vehsPerHour="300"/>
+    <flow id="ASE" type="aggressive" route="route_6" begin="0" end="600" vehsPerHour="300"/>
+
+    <flow id="CSN" type="cautious" route="route_7" begin="0" end="600" vehsPerHour="25"/>
+    <flow id="ASN" type="aggressive" route="route_7" begin="0" end="600" vehsPerHour="25"/>
+
+    <flow id="CSW" type="cautious" route="route_8" begin="0" end="600" vehsPerHour="25"/>
+    <flow id="ASW" type="aggressive" route="route_8" begin="0" end="600" vehsPerHour="25"/>
+
+    <flow id="CWS" type="cautious" route="route_9" begin="0" end="600" vehsPerHour="25"/>
+    <flow id="AWS" type="aggressive" route="route_9" begin="0" end="600" vehsPerHour="25"/>
+
+    <flow id="CWE" type="cautious" route="route_10" begin="0" end="600" vehsPerHour="300"/>
+    <flow id="AWE" type="aggressive" route="route_10" begin="0" end="600" vehsPerHour="300"/>
+
+    <flow id="CWN" type="cautious" route="route_11" begin="0" end="600" vehsPerHour="25"/>
+    <flow id="AWN" type="aggressive" route="route_11" begin="0" end="600" vehsPerHour="25"/>
+
+
+
+
+
+
+    <flow id="CWNR" type="cautious" route="route_11" begin="600" end="1200" vehsPerHour="25"/>
+    <flow id="AWNR" type="aggressive" route="route_11" begin="600" end="1200" vehsPerHour="25"/>
+
+    <flow id="ASNR" type="cautious" route="route_7" begin="600" end="1200" vehsPerHour="25"/>
+    <flow id="CSNR" type="aggressive" route="route_7" begin="600" end="1200" vehsPerHour="25"/>
+
+    <flow id="CENR" type="cautious" route="route_3" begin="600" end="1200" vehsPerHour="300"/>
+    <flow id="AENR" type="aggressive" route="route_3" begin="600" end="1200" vehsPerHour="300"/>
+
+    <flow id="CNER" type="cautious" route="route_2" begin="600" end="1200" vehsPerHour="100"/>
+    <flow id="ANER" type="aggressive" route="route_2" begin="600" end="1200" vehsPerHour="100"/>
+
+    <flow id="CWER" type="cautious" route="route_10" begin="600" end="1200" vehsPerHour="100"/>
+    <flow id="AWER" type="aggressive" route="route_10" begin="600" end="1200" vehsPerHour="100"/>
+
+    <flow id="CSER" type="cautious" route="route_6" begin="600" end="1200" vehsPerHour="100"/>
+    <flow id="ASER" type="aggressive" route="route_6" begin="600" end="1200" vehsPerHour="100"/>
+
+    <flow id="CESR" type="cautious" route="route_5" begin="600" end="1200" vehsPerHour="300"/>
+    <flow id="AESR" type="aggressive" route="route_5" begin="600" end="1200" vehsPerHour="300"/>
+
+    <flow id="CNSR" type="cautious" route="route_1" begin="600" end="1200" vehsPerHour="25"/>
+    <flow id="ANSR" type="aggressive" route="route_1" begin="600" end="1200" vehsPerHour="25"/>
+
+    <flow id="CWSR" type="cautious" route="route_9" begin="600" end="1200" vehsPerHour="25"/>
+    <flow id="AWSR" type="aggressive" route="route_9" begin="600" end="1200" vehsPerHour="25"/>
+
+    <flow id="CSWR" type="cautious" route="route_8" begin="600" end="1200" vehsPerHour="25"/>
+    <flow id="ASWR" type="aggressive" route="route_8" begin="600" end="1200" vehsPerHour="25"/>
+
+    <flow id="CEWR" type="cautious" route="route_4" begin="600" end="1200" vehsPerHour="300"/>
+    <flow id="AEWR" type="aggressive" route="route_4" begin="600" end="1200" vehsPerHour="300"/>
+
+    <flow id="CNWR" type="cautious" route="route_0" begin="600" end="1200" vehsPerHour="25"/>
+    <flow id="ANWR" type="aggressive" route="route_0" begin="600" end="1200" vehsPerHour="25"/>
+
+
+
+</routes>
