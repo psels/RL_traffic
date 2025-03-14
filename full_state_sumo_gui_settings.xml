@@ -2,7 +2,7 @@
 <guiSettings>
     <viewsettings>
         <scheme name="real world"/>
-        <show value="true"/>
+        <show value="150"/>
     </viewsettings>
 
     <!-- Activer les principales fenêtres -->
