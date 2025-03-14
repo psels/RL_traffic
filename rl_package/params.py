@@ -1,0 +1,8 @@
+import os
+
+SUMO_BIN = os.getenv("SUMO")
+SUMO_GUI_BIN = os.getenv("SUMO-GUI")
+SIMUL_CONFIG = os.getenv("SIMUL-CONFIG")
+MEMORY_MAX_SIZE = 10000
+EPISODE = 200
+BATCH_SIZE = 32
