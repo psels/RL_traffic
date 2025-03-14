@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<guiSettings>
+    <viewsettings>
+        <scheme name="real world"/>
+        <show value="true"/>
+    </viewsettings>
+
+    <!-- Activer les principales fenêtres -->
+    <window name="Statistics" show="true"/>
+    <window name="Network" show="true"/>
+    <window name="Tripinfo" show="true"/>
+    <window name="Timeline" show="true"/>
+
+    <!-- Graphiques statistiques -->
+    <window name="Statistic Charts" show="true">
+        <plot name="Average Speed (m/s)" value="true"/>
+        <plot name="Halting Vehicles" value="true"/>
+        <plot name="Running Vehicles" value="true"/>
+    </window>
+</guiSettings>
