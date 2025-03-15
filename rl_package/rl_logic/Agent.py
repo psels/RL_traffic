@@ -22,17 +22,25 @@ class AgentSumo():
         self.optimizer = tf.keras.optimizers.Adam(learning_rate=0.05)
         self.loss_fn = tf.keras.losses.MeanSquaredError()
 
+
+
     def build_model(self):
-        if self.type_model == "DQN":
-            self.model_action = DQN(self.n_inputs,self.n_outputs)
-        elif self.type_model =='2DQN':
-            self.model_action = DQN(self.n_inputs,self.n_outputs)
-            self.model_target = DQN(self.n_inputs,self.n_outputs)
+        model_path = f"models/{self.type_model}.keras"
+
+        if os.path.exists(model_path):  # Vérifie si le modèle existe déjà
+            self.model_action = tf.keras.models.load_model(model_path)
+        else:
+            print(f"🚀 Création d'un nouveau modèle {self.type_model}...")
+            if self.type_model in ["DQN","2DQN"]:
+                self.model_action = DQN(self.n_inputs, self.n_outputs)
+            elif self.type_model == "3DQN":
+                self.model_action = DuelingDQN(self.n_inputs, self.n_outputs)
+
+        # Si c'est un DQN avancé, créer un target model
+        if self.type_model in ["2DQN", "3DQN"]:
+            self.model_target = tf.keras.models.clone_model(self.model_action)
             self.model_target.set_weights(self.model_action.get_weights())
-        elif self.type_model == '3DQN':
-            self.model_action = DuelingDQN(self.n_inputs,self.n_outputs)
-            self.model_target = DuelingDQN(self.n_inputs,self.n_outputs)
-            self.model_target.set_weights(self.model_action.get_weights())
+
 
 
     def epsilon_greedy_policy(self,state, epsilon=0):
@@ -59,9 +67,9 @@ class AgentSumo():
             next_Q_values = self.model_action.predict(next_states, verbose=0)  # ≠ target.predict()
             best_next_actions = next_Q_values.argmax(axis=1)
             next_mask = tf.one_hot(best_next_actions, self.n_outputs).numpy()
-            max_next_Q_values = (self.target.predict(next_states, verbose=0) * next_mask
+            max_next_Q_values = (self.model_target.predict(next_states, verbose=0) * next_mask
                                 ).sum(axis=1)
-            next_Q_values = self.target.predict(next_states, verbose=0)
+            next_Q_values = self.model_target.predict(next_states, verbose=0)
 
         max_next_Q_values = next_Q_values.max(axis=1)
         target_Q_values = rewards + self.discount_factor * max_next_Q_values
