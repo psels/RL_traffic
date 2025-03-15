@@ -26,6 +26,9 @@ class EnvironnementSumo:
         return [traci.lane.getLastStepHaltingNumber(lane_id) for i,lane_id in enumerate(lane_ids) ]+\
         [traci.lane.getLastStepVehicleNumber(lane_id) for i,lane_id in enumerate(lane_ids)]
 
+    def get_total_number_vehicles(self):
+        return len(traci.vehicle.getIDList())
+
 
     def get_phase_without_yellow(self,traffic_light):
         "return phases of trafific_light without yellow phase"
