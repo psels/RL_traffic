@@ -31,27 +31,16 @@ class AgentSumo():
             self.model_action = tf.keras.models.load_model(model_path)
         else:
             print(f"🚀 Création d'un nouveau modèle {self.type_model}...")
-            if self.type_model == "DQN":
+            if self.type_model in ["DQN","2DQN"]:
                 self.model_action = DQN(self.n_inputs, self.n_outputs)
             elif self.type_model == "3DQN":
                 self.model_action = DuelingDQN(self.n_inputs, self.n_outputs)
 
         # Si c'est un DQN avancé, créer un target model
         if self.type_model in ["2DQN", "3DQN"]:
-            self.target = tf.keras.models.clone_model(self.model_action)
-            self.target.set_weights(self.model_action.get_weights())
+            self.model_target = tf.keras.models.clone_model(self.model_action)
+            self.model_target.set_weights(self.model_action.get_weights())
 
-    # def build_model(self):
-    #     if self.type_model == "DQN":
-    #         self.model_action = DQN(self.n_inputs,self.n_outputs)
-    #     elif self.type_model =='2DQN':
-    #         self.model_action = DQN(self.n_inputs,self.n_outputs)
-    #         self.model_target = DQN(self.n_inputs,self.n_outputs)
-    #         self.model_target.set_weights(self.model_action.get_weights())
-    #     elif self.type_model == '3DQN':
-    #         self.model_action = DuelingDQN(self.n_inputs,self.n_outputs)
-    #         self.model_target = DuelingDQN(self.n_inputs,self.n_outputs)
-    #         self.model_target.set_weights(self.model_action.get_weights())
 
 
     def epsilon_greedy_policy(self,state, epsilon=0):
