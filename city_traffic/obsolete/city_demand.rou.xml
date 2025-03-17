@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-15 17:01:03 by Eclipse SUMO netedit Version 1.22.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- Routes -->
+    <route id="r_A_B" edges="end_A_junction_1 end_A_end_B"/>
+    <route id="r_A_C" edges="end_A_junction_1 junction_1_junction_2 junction_2_end_C"/>
+    <route id="r_A_D" edges="end_A_junction_1 junction_1_junction_2 junction_2_end_D"/>
+    <route id="r_A_E" edges="end_A_junction_1 E7 junction_6_junction_3 junction_3_end_E"/>
+    <route id="r_A_F" edges="end_A_junction_1 E7 junction_6_junction_3 junction_3_junction_4 junction_4_end_F"/>
+    <route id="r_A_G" edges="end_A_junction_1 E7 junction_6_junction_3 junction_3_junction_4 junction_4_end_G"/>
+    <route id="r_A_H" edges="end_A_junction_1 E7 E9 junction_5_end_H"/>
+    <route id="r_A_I" edges="end_A_junction_1 E7 E9 junction_5_end_I"/>
+    <route id="r_A_J" edges="end_A_junction_1 E7 junction_6_end_J"/>
+    <route id="r_B_A" edges="end_B_junction_1 junction_1_end_A" color="blue"/>
+    <route id="r_B_C" edges="end_B_junction_1 junction_1_junction_2 junction_2_end_C" color="blue"/>
+    <route id="r_B_D" edges="end_B_junction_1 junction_1_junction_2 junction_2_end_D" color="blue"/>
+    <route id="r_B_E" edges="end_B_junction_1 E7 junction_6_junction_3 junction_3_end_E" color="blue"/>
+    <route id="r_B_F" edges="end_B_junction_1 E7 junction_6_junction_3 junction_3_junction_4 junction_4_end_F" color="blue"/>
+    <route id="r_B_G" edges="end_B_junction_1 E7 junction_6_junction_3 junction_3_junction_4 junction_4_end_G" color="blue"/>
+    <route id="r_B_H" edges="end_B_junction_1 E7 E9 junction_5_end_H" color="blue"/>
+    <route id="r_B_I" edges="end_B_junction_1 E7 E9 junction_5_end_I" color="blue"/>
+    <route id="r_B_J" edges="end_B_junction_1 E7 junction_6_end_J" color="blue"/>
+    <route id="r_B_J_A_SUPPRIMER" edges="end_B_junction_1 E7 junction_6_end_J" color="blue"/>
+    <route id="r_C_A" edges="end_C_junction_2 junction_2_junction_1 junction_1_end_A" color="cyan"/>
+    <route id="r_C_B" edges="end_C_junction_2 junction_2_junction_1 end_A_end_B" color="cyan"/>
+    <route id="r_C_D" edges="end_C_junction_2 junction_2_end_D" color="cyan"/>
+    <route id="r_C_E" edges="end_C_junction_2 junction_2_junction_3 junction_3_end_E" color="cyan"/>
+    <route id="r_C_F" edges="end_C_junction_2 junction_2_junction_3 junction_3_junction_4 junction_4_end_F" color="cyan"/>
+    <route id="r_C_G" edges="end_C_junction_2 junction_2_junction_3 junction_3_junction_4 junction_4_end_G" color="cyan"/>
+    <route id="r_C_I" edges="end_C_junction_2 junction_2_junction_3 junction_3_junction_6 E9 junction_5_end_I" color="cyan"/>
+    <route id="r_C_J" edges="end_C_junction_2 junction_2_junction_3 junction_3_junction_6 junction_6_end_J" color="cyan"/>
+    <route id="r_D_A" edges="end_D_junction_2 junction_2_junction_1 junction_1_end_A" color="cyan"/>
+    <route id="r_D_B" edges="end_D_junction_2 junction_2_junction_1 end_A_end_B" color="magenta"/>
+    <route id="r_D_C" edges="end_D_junction_2 junction_2_end_C" color="cyan"/>
+    <route id="r_D_E" edges="end_D_junction_2 junction_2_junction_3 junction_3_end_E" color="cyan"/>
+    <route id="r_D_F" edges="end_D_junction_2 junction_2_junction_3 junction_3_junction_4 junction_4_end_F" color="cyan"/>
+    <route id="r_D_G" edges="end_D_junction_2 junction_2_junction_3 junction_3_junction_4 junction_4_end_G" color="cyan"/>
+    <route id="r_D_H" edges="end_D_junction_2 junction_2_junction_3 junction_3_junction_6 E9 junction_5_end_H" color="cyan"/>
+    <route id="r_D_I" edges="end_D_junction_2 junction_2_junction_3 junction_3_junction_6 E9 junction_5_end_I" color="cyan"/>
+    <route id="r_D_J" edges="end_D_junction_2 junction_2_junction_3 junction_3_junction_6 junction_6_end_J" color="cyan"/>
+    <route id="r_E_A" edges="end_E_junction_3 junction_3_junction_6 -E7 junction_1_end_A" color="cyan"/>
+    <route id="r_E_B" edges="end_E_junction_3 junction_3_junction_6 -E7 end_A_end_B" color="cyan"/>
+    <route id="r_E_C" edges="end_E_junction_3 junction_3_junction_2 junction_2_end_C" color="cyan"/>
+    <route id="r_E_D" edges="end_E_junction_3 junction_3_junction_2 junction_2_end_D" color="cyan"/>
+    <route id="r_E_F" edges="end_E_junction_3 junction_3_junction_4 junction_4_end_F" color="cyan"/>
+    <route id="r_E_G" edges="end_E_junction_3 junction_3_junction_4 junction_4_end_G" color="cyan"/>
+    <route id="r_E_H" edges="end_E_junction_3 junction_3_junction_6 E9 junction_5_end_H" color="cyan"/>
+    <route id="r_E_I" edges="end_E_junction_3 junction_3_junction_6 E9 junction_5_end_I" color="cyan"/>
+    <route id="r_E_J" edges="end_E_junction_3 junction_3_junction_6 junction_6_end_J" color="cyan"/>
+    <route id="r_F_A" edges="E6 junction_4_junction_3 junction_3_junction_6 -E7 junction_1_end_A" color="cyan"/>
+    <route id="r_F_B" edges="E6 junction_4_junction_3 junction_3_junction_6 -E7 end_A_end_B" color="0,128,0"/>
+    <route id="r_F_C" edges="E6 junction_4_junction_3 junction_3_junction_2 junction_2_end_C" color="128,128,0"/>
+    <route id="r_F_E" edges="E6 junction_4_junction_3 junction_3_end_E" color="cyan"/>
+    <route id="r_F_G" edges="E6 junction_4_end_G" color="cyan"/>
+    <route id="r_F_I" edges="E6 junction_4_junction_5 junction_5_end_I" color="cyan"/>
+    <route id="r_F_J" edges="E6 junction_4_junction_3 junction_3_junction_6 junction_6_end_J" color="cyan"/>
+    <route id="r_G_A" edges="junction_4_junction_3 junction_3_junction_6 -E7 junction_1_end_A" color="cyan"/>
+    <route id="r_G_B" edges="end_G_junction_4 junction_4_junction_3 junction_3_junction_6 -E7 end_A_end_B" color="cyan"/>
+    <route id="r_G_C" edges="E6 junction_4_junction_3 junction_3_junction_2 junction_2_end_C" color="cyan"/>
+    <route id="r_G_D" edges="end_G_junction_4 junction_4_junction_3 junction_3_junction_2 junction_2_end_D" color="cyan"/>
+    <route id="r_G_E" edges="end_G_junction_4 junction_4_junction_3 junction_3_end_E" color="cyan"/>
+    <route id="r_G_F" edges="end_G_junction_4 junction_4_end_F" color="cyan"/>
+    <route id="r_G_H" edges="E6 junction_4_junction_3 junction_3_junction_6 E9 junction_5_junction_4" color="cyan"/>
+    <route id="r_G_J" edges="junction_4_junction_3 junction_3_junction_6 junction_6_end_J" color="cyan"/>
+</routes>

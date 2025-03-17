@@ -2,8 +2,9 @@
 <guiSettings>
     <viewsettings>
         <scheme name="real world"/>
-        <show value="150"/>
     </viewsettings>
+
+    <delay value="150"/>
 
     <!-- Activer les principales fenêtres -->
     <window name="Statistics" show="true"/>
