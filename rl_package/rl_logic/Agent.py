@@ -67,6 +67,9 @@ class AgentSumo():
         #     self.memory.pop(0)
         self.replay_buffer.append((state, action, reward, next_state))
 
+
+
+
     def training_step(self,batch_size=32):
         experiences = self.sample_experiences(batch_size)
         states, actions, rewards, next_states = experiences  # a changer

@@ -60,15 +60,13 @@ class EnvironnementSumo:
         return next_states,rewards
 
 
-    def full_simul(self,agent):
-        lanes = self.get_lane_no_intersection()
-        state = np.array(self.get_state(lanes))
-        action=1
+    def full_simul(self,agents):
         for step in range(130000): ## TO CHANGED
             if step%2000 == 0:
-                state=np.array(self.get_state(lanes))
-                action = agent.epsilon_greedy_policy(state,0)*2
-                traci.trafficlight.setPhase(self.trafficlights_ids[0],action)
+                states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
+                actions = [agent.epsilon_greedy_policy(np.array(states[i]),0)*2 for i,agent in enumerate(agents)]
+                for i,traffic_light in enumerate(self.trafficlights_ids):
+                    traci.trafficlight.setPhase(traffic_light,actions[i])
             traci.simulationStep()
 
     def get_number_of_junction(self):
@@ -87,7 +85,6 @@ class EnvironnementSumo:
 
 
     def get_states_per_traffic_light(self, traffic_light):
-        # initialisation d'un dictionnaire vide
 
         lane_ids = traci.trafficlight.getControlledLinks(traffic_light)
         values = []
@@ -97,9 +94,6 @@ class EnvironnementSumo:
                     values.append(k)
         lane_ids = values
         cleaned_lane_ids = [lane for lane in lane_ids if not lane.startswith(':')]
-        # print(cleaned_lane_ids)
-        # print(len(cleaned_lane_ids))
-        # on met ça dans le dico
         return [traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
         [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids]
 

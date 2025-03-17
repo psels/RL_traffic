@@ -331,21 +331,20 @@
     <tlLogic id="B" type="static" programID="0" offset="0">
         <phase duration="33" state="GGGrGrrrrGGGrGrrrr"/>
         <phase duration="3"  state="GyyrGrrrrGyyrGrrrr"/>
-        <phase duration="6"  state="GrrGGrrrrGrrGGrrrr"/>
+        <phase duration="33"  state="GrrGGrrrrGrrGGrrrr"/>
         <phase duration="3"  state="GrryGrrrrGrryGrrrr"/>
         <phase duration="33" state="GrrrGGGGrGrrrGGGGr"/>
         <phase duration="3"  state="GrrrGyyyrGrrrGyyyr"/>
-        <phase duration="6"  state="GrrrGrrrGGrrrGrrrG"/>
+        <phase duration="33"  state="GrrrGrrrGGrrrGrrrG"/>
         <phase duration="3"  state="GrrrGrrryGrrrGrrry"/>
     </tlLogic>
     <tlLogic id="E" type="static" programID="0" offset="0">
         <phase duration="33" state="GGGrGrrrGGGrGrrr"/>
         <phase duration="3"  state="GyyrGrrrGyyrGrrr"/>
-        <phase duration="6"  state="GrrGGrrrGrrGGrrr"/>
+        <phase duration="33"  state="GrrGGrrrGrrGGrrr"/>
         <phase duration="3"  state="GrryGrrrGrryGrrr"/>
         <phase duration="33" state="GrrrGGGrGrrrGGGr"/>
         <phase duration="3"  state="GrrrGyyrGrrrGyyr"/>
-        <phase duration="6"  state="GrrrGrrGGrrrGrrG"/>
         <phase duration="3"  state="GrrrGrryGrrrGrry"/>
     </tlLogic>
 
