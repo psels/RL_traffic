@@ -25,21 +25,30 @@ class AgentSumo():
 
 
     def build_model(self):
-        model_path = f"models/{self.type_model}.keras"
+        # model_path = f"models/{self.type_model}.keras"
 
-        if os.path.exists(model_path):  # Vérifie si le modèle existe déjà
-            self.model_action = tf.keras.models.load_model(model_path)
-        else:
-            print(f"🚀 Création d'un nouveau modèle {self.type_model}...")
-            if self.type_model in ["DQN","2DQN"]:
-                self.model_action = DQN(self.n_inputs, self.n_outputs)
-            elif self.type_model == "3DQN":
-                self.model_action = DuelingDQN(self.n_inputs, self.n_outputs)
+        # if  os.path.exists(model_path):  # Vérifie si le modèle existe déjà
+        #      self.model_action = tf.keras.models.load_model(model_path)
+        # else:
+        #     print(f"🚀 Création d'un nouveau modèle {self.type_model}...")
+        #     if self.type_model in ["DQN","2DQN"]:
+        #         self.model_action = DQN(self.n_inputs, self.n_outputs)
+        #     elif self.type_model == "3DQN":
+        #         self.model_action = DuelingDQN(self.n_inputs, self.n_outputs)
 
-        # Si c'est un DQN avancé, créer un target model
+        # # Si c'est un DQN avancé, créer un target model
+        # if self.type_model in ["2DQN", "3DQN"]:
+        #     self.model_target = tf.keras.models.clone_model(self.model_action)
+        #     self.model_target.set_weights(self.model_action.get_weights())
+        print(f"🚀 Création d'un nouveau modèle {self.type_model}...")
+        if self.type_model in ["DQN","2DQN"]:
+            self.model_action = DQN(self.n_inputs, self.n_outputs)
+        elif self.type_model == "3DQN":
+            self.model_action = DuelingDQN(self.n_inputs, self.n_outputs)
         if self.type_model in ["2DQN", "3DQN"]:
             self.model_target = tf.keras.models.clone_model(self.model_action)
             self.model_target.set_weights(self.model_action.get_weights())
+
 
 
 
@@ -47,6 +56,7 @@ class AgentSumo():
         if np.random.rand() < epsilon:
             return np.random.randint(self.n_outputs)  # random action
         else:
+            #print(state,type(state),state.shape)
             Q_values = self.model_action.predict(state[np.newaxis], verbose=0)[0]
             return Q_values.argmax()  # optimal action according to the DQN
 
