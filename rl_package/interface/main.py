@@ -28,6 +28,7 @@ def preprocess():
     inputs_per_agents = []
     outputs_per_agents = []
     positions_phases = []
+
     for trafficlight in env.trafficlights_ids:
         # Get the number of lanes controlled by this traffic light
         n_lanes = len(env.control_lanes(trafficlight))
@@ -35,12 +36,13 @@ def preprocess():
 
         # Get the number of valid traffic light phases (excluding yellow)
         n_phases,position = env.get_phase_without_yellow(trafficlight)
+        #print(f'trafficlight :{trafficlight},\n lane associated {env.control_lanes(trafficlight)}')
         n_outputs = len(n_phases)
         positions_phases.append(position)
         outputs_per_agents.append(n_outputs)
 
     env.close()
-    return inputs_per_agents, outputs_per_agents,positions_phases  # List of inputs and outputs per agent
+    return inputs_per_agents, outputs_per_agents,positions_phases  # List of inputs, outputs per agent, and the postion phases of each trafficlight
 
 
 def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_model="DQN"):
