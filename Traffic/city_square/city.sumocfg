@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-17 17:34:41 by Eclipse SUMO sumo Version 1.22.0
+-->
+
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="city.net.xml"/>
+        <route-files value="city_car_only.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="1300"/>
+        <step-length value="0.1"/>
+    </time>
+
+    <gui_only>
+
+        <start value="true"/>
+    </gui_only>
+
+</sumoConfiguration>
