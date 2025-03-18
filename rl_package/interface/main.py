@@ -32,7 +32,7 @@ def preprocess():
     for trafficlight in env.trafficlights_ids:
         # Get the number of lanes controlled by this traffic light
         n_lanes = len(env.control_lanes(trafficlight))
-        inputs_per_agents.append(n_lanes * 2)  # Inputs: queue + vehicle count
+        inputs_per_agents.append(n_lanes * 5)  # Inputs: queue + vehicle count
 
         # Get the number of valid traffic light phases (excluding yellow)
         n_phases,position = env.get_phase_without_yellow(trafficlight)
@@ -78,6 +78,7 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
 
         traffic_lights = env.trafficlights_ids
         states = [env.get_states_per_traffic_light(traffic_light) for traffic_light in traffic_lights]
+        print(states[0])
 
         for _ in range(150):  # Steps per episode
             actions = [agent.epsilon_greedy_policy(np.array(states[i]), epsilon) for i, agent in enumerate(agents)]
@@ -132,7 +133,7 @@ def scenario(agents,positions_phases):
     Runs a SUMO simulation using the trained agents.
     """
 
-    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.02']
+    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.01']
     env = EnvironnementSumo(sumoCmd, WINDOW)
     #Store the position phases of the trafficlight in the environment
     env.position_phases = positions_phases

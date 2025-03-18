@@ -3,7 +3,7 @@ import numpy as np
 import os
 from rl_package.rl_logic.annexe import calculate_reward
 from rl_package.params import WINDOW
-
+import matplotlib.pyplot as plt
 
 class EnvironnementSumo:
     def __init__(self, sumoCmd,window=2000):
@@ -57,20 +57,76 @@ class EnvironnementSumo:
             traci.simulationStep()
 
         next_states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
-        n= len(actions)//2
+        # print("actions",actions)
+        # print("states",states)
+        # print("next_states",next_states)
+        n= len(actions)//5
         rewards = [calculate_reward(states[i][:n],next_states[i][:n]) for i in range(len(actions))]
+
 
         return next_states,rewards
 
 
     def full_simul(self,agents):
-        for step in range(130000): ## TO CHANGED
+         ########## GLOBAL ENV STATE ##########
+        global_wait_time_list = []
+        global_nb_vehicules_list = []
+        global_nb_halting_list = []
+        global_speed_list = []
+        ######################################
+        ########## GLOBAL ENV STATE ##########
+        global_wait_time_list = []
+        global_nb_vehicules_list = []
+        global_nb_halting_list = []
+        global_speed_list = []
+        ######################################
+        for step in range(13000): ## TO CHANGED
             if step%WINDOW == 0:
                 states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
                 actions = [agent.epsilon_greedy_policy(np.array(states[i]),0) for i,agent in enumerate(agents)]
                 for i,traffic_light in enumerate(self.trafficlights_ids):
                     traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
+
+
+                ###############################################################################################
+                global_wait_time = sum(traci.vehicle.getWaitingTime(veh) for veh in traci.vehicle.getIDList())
+                global_nb_vehicules = len(traci.vehicle.getIDList())
+                global_nb_halting = sum(1 for veh in traci.vehicle.getIDList() if traci.vehicle.getWaitingTime(veh) > 0)
+                global_speed = sum(traci.vehicle.getSpeed(veh) for veh in traci.vehicle.getIDList()) / (global_nb_vehicules + 1e-10)
+
+                global_wait_time_list.append(sum(traci.vehicle.getWaitingTime(veh) for veh in traci.vehicle.getIDList()))
+                global_nb_vehicules_list.append(len(traci.vehicle.getIDList()))
+                global_nb_halting_list.append(sum(1 for veh in traci.vehicle.getIDList() if traci.vehicle.getWaitingTime(veh) > 0))
+                global_speed_list.append(sum(traci.vehicle.getSpeed(veh) for veh in traci.vehicle.getIDList()))
+                #######################################################################################################
+
             traci.simulationStep()
+        ########## PLOTTING ##########
+        fig, axs = plt.subplots(4, 1, figsize=(10, 15))
+
+        # Plot global wait time
+        axs[0].plot(global_wait_time_list, label='Global Wait Time')
+        axs[0].legend()
+        axs[0].set_title('Global Wait Time')
+
+        # Plot global number of vehicles
+        axs[1].plot(global_nb_vehicules_list, label='Global Number of Vehicles')
+        axs[1].legend()
+        axs[1].set_title('Global Number of Vehicles')
+
+        # Plot global number of halting vehicles
+        axs[2].plot(global_nb_halting_list, label='Global Number of Halting Vehicles')
+        axs[2].legend()
+        axs[2].set_title('Global Number of Halting Vehicles')
+
+        # Plot global speed
+        axs[3].plot(global_speed_list, label='Global Speed')
+        axs[3].legend()
+        axs[3].set_title('Global Speed')
+
+        plt.tight_layout()
+        plt.show()
+        ######################################
 
     def get_number_of_junction(self):
         return traci.junction.getIDCount()
@@ -93,8 +149,21 @@ class EnvironnementSumo:
         for lane in lane_ids:
             if lane not in cleaned_lane_ids:
                 cleaned_lane_ids.append(lane)
+        #print(cleaned_lane_ids,len(cleaned_lane_ids))
+        # print("\n")
+        # if traffic_light ==self.trafficlights_ids[0]:
+        #     print([traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
+        #     [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids] +\
+        #     [traci.lane.getLastStepMeanSpeed(lane_id) for lane_id in cleaned_lane_ids] +\
+        #     [traci.lane.getLastStepOccupancy(lane_id) for lane_id in cleaned_lane_ids] +\
+        #     [traci.lane.getWaitingTime(lane_id) for lane_id in cleaned_lane_ids])
+        #     print('\n')
+
         return [traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
-        [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids]
+            [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids] +\
+            [traci.lane.getLastStepMeanSpeed(lane_id) for lane_id in cleaned_lane_ids] +\
+            [traci.lane.getLastStepOccupancy(lane_id) for lane_id in cleaned_lane_ids] +\
+            [traci.lane.getWaitingTime(lane_id) for lane_id in cleaned_lane_ids]
 
 
     def close(self):
