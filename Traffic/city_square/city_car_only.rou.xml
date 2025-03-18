@@ -5,7 +5,7 @@
 <vType id="cautious" guiShape="passenger" accel="2" decel="5" sigma="0.3" length="4"
        minGap="1.5" maxSpeed="30" color="0,0,1" carFollowModel="Krauss"/>
 
-<vType id="aggressive" guiShape="passenger" accel="5" decel="10" sigma="1.2" length="4"
+<vType id="aggressive" guiShape="passenger" accel="5" decel="10" sigma="0.9" length="4"
        minGap="0.5" maxSpeed="40" color="1,0,0" carFollowModel="IDM"/>
 
 <vType id="motorcycle" guiShape="motorcycle" accel="6" decel="8" sigma="0.8" length="2"
