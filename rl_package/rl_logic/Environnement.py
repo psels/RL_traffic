@@ -2,6 +2,7 @@ import traci
 import numpy as np
 import os
 from rl_package.rl_logic.annexe import calculate_reward
+from rl_package.params import WINDOW
 
 
 class EnvironnementSumo:
@@ -64,11 +65,10 @@ class EnvironnementSumo:
 
     def full_simul(self,agents):
         for step in range(130000): ## TO CHANGED
-            if step%2000 == 0:
+            if step%WINDOW == 0:
                 states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
                 actions = [agent.epsilon_greedy_policy(np.array(states[i]),0) for i,agent in enumerate(agents)]
                 for i,traffic_light in enumerate(self.trafficlights_ids):
-                    #traci.trafficlight.setPhase(traffic_light,actions[i]*2)
                     traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
             traci.simulationStep()
 
@@ -78,13 +78,7 @@ class EnvironnementSumo:
 
     def control_lanes(self, traffic_light):
         lane_ids = traci.trafficlight.getControlledLanes(traffic_light)
-        # values = []
-        # for value in lane_ids:
-        #     for j in value:
-        #         for k in j:
-        #             if k not in values:
-        #                 values.append(k)
-        # lane_ids = values
+
         lanes_unique = []
         for lane in lane_ids:
             if lane not in lanes_unique:
@@ -94,15 +88,6 @@ class EnvironnementSumo:
 
 
     def get_states_per_traffic_light(self, traffic_light):
-
-        # lane_ids = traci.trafficlight.getControlledLinks(traffic_light)
-        # values = []
-        # for value in lane_ids:
-        #     for j in value:
-        #         for k in j:
-        #              if k not in values:
-        #                 values.append(k)
-        # lane_ids = values
         lane_ids = traci.trafficlight.getControlledLanes(traffic_light)
         cleaned_lane_ids = []
         for lane in lane_ids:

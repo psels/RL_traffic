@@ -62,7 +62,8 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
             if agent.model_target:  # For Double/Dueling DQN
                 agent.model_target = tf.keras.models.load_model(model_path)
 
-    sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings']
+
+    sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.02']
 
 
 
@@ -78,7 +79,7 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
         traffic_lights = env.trafficlights_ids
         states = [env.get_states_per_traffic_light(traffic_light) for traffic_light in traffic_lights]
 
-        for _ in range(50):  # Steps per episode
+        for _ in range(150):  # Steps per episode
             actions = [agent.epsilon_greedy_policy(np.array(states[i]), epsilon) for i, agent in enumerate(agents)]
             next_states, rewards = env.step(actions)
 
@@ -130,7 +131,8 @@ def scenario(agents,positions_phases):
     """
     Runs a SUMO simulation using the trained agents.
     """
-    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings']
+
+    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.02']
     env = EnvironnementSumo(sumoCmd, WINDOW)
     #Store the position phases of the trafficlight in the environment
     env.position_phases = positions_phases
