@@ -12,6 +12,7 @@ class EnvironnementSumo:
         self.window=window
         self.lanes_ids = traci.lane.getIDList()
         self.trafficlights_ids = traci.trafficlight.getIDList()
+        self.position_phases = None
 
 
     def queue(self,lane_ids):
@@ -48,7 +49,8 @@ class EnvironnementSumo:
         #utiliser un modele, renvoyer next state: array, reward:int, done :
         states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
         for i,traffic_light in enumerate(self.trafficlights_ids):
-            traci.trafficlight.setPhase(traffic_light,2*actions[i])
+            #traci.trafficlight.setPhase(traffic_light,2*actions[i])
+            traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
 
         for _ in range(self.window):
             traci.simulationStep()
@@ -64,9 +66,10 @@ class EnvironnementSumo:
         for step in range(130000): ## TO CHANGED
             if step%2000 == 0:
                 states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
-                actions = [agent.epsilon_greedy_policy(np.array(states[i]),0)*2 for i,agent in enumerate(agents)]
+                actions = [agent.epsilon_greedy_policy(np.array(states[i]),0) for i,agent in enumerate(agents)]
                 for i,traffic_light in enumerate(self.trafficlights_ids):
-                    traci.trafficlight.setPhase(traffic_light,actions[i])
+                    #traci.trafficlight.setPhase(traffic_light,actions[i]*2)
+                    traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
             traci.simulationStep()
 
     def get_number_of_junction(self):

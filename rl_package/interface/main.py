@@ -27,21 +27,23 @@ def preprocess():
     env = EnvironnementSumo(sumoCmd, WINDOW)
     inputs_per_agents = []
     outputs_per_agents = []
-
+    positions_phases = []
     for trafficlight in env.trafficlights_ids:
         # Get the number of lanes controlled by this traffic light
         n_lanes = len(env.control_lanes(trafficlight))
         inputs_per_agents.append(n_lanes * 2)  # Inputs: queue + vehicle count
 
         # Get the number of valid traffic light phases (excluding yellow)
-        n_outputs = len(env.get_phase_without_yellow(trafficlight)[0])
+        n_phases,position = env.get_phase_without_yellow(trafficlight)
+        n_outputs = len(n_phases)
+        positions_phases.append(position)
         outputs_per_agents.append(n_outputs)
 
     env.close()
-    return inputs_per_agents, outputs_per_agents  # List of inputs and outputs per agent
+    return inputs_per_agents, outputs_per_agents,positions_phases  # List of inputs and outputs per agent
 
 
-def train_models(inputs_per_agents, outputs_per_agents, type_model="DQN"):
+def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_model="DQN"):
     """
     Trains multiple reinforcement learning agents to optimize traffic lights.
     Saves each model separately.
@@ -65,6 +67,10 @@ def train_models(inputs_per_agents, outputs_per_agents, type_model="DQN"):
     for episode in range(EPISODE):
         print(f'🔄 Episode {episode}/{EPISODE}')
         env = EnvironnementSumo(sumoCmd, WINDOW)
+
+        #Store the position phases of the trafficlight in the environment
+        env.position_phases = positions_phases
+
         epsilon = max(1 - episode / EPISODE, 0.01)  # Decaying epsilon for exploration
 
         traffic_lights = env.trafficlights_ids
@@ -118,12 +124,14 @@ def load_trained_agents(inputs_per_agents, outputs_per_agents, type_model="DQN")
 
     return agents
 
-def scenario(agents):
+def scenario(agents,positions_phases):
     """
     Runs a SUMO simulation using the trained agents.
     """
     sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings']
     env = EnvironnementSumo(sumoCmd, WINDOW)
+    #Store the position phases of the trafficlight in the environment
+    env.position_phases = positions_phases
     env.full_simul(agents)
 
 
@@ -143,12 +151,14 @@ def get_args():
 if __name__ == '__main__':
     args = get_args()
     type_model = args.model
-    inputs_per_agents, outputs_per_agents = preprocess()
-
+    inputs_per_agents, outputs_per_agents,positions_phases = preprocess()
+    print(f'inputs : {inputs_per_agents}')
+    print(f'outputs : {outputs_per_agents}')
+    print(f'positions : {positions_phases}')
     if args.train:
-        train_models(inputs_per_agents, outputs_per_agents, type_model)
+        train_models(inputs_per_agents, outputs_per_agents, positions_phases, type_model)
     elif args.evaluate:
         agents = load_trained_agents(inputs_per_agents, outputs_per_agents, type_model)
-        scenario(agents)
+        scenario(agents,positions_phases)
     else:
         print("❌ Specify --train to train the model or --evaluate to run a simulation.")

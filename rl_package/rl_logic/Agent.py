@@ -68,26 +68,27 @@ class AgentSumo():
         self.replay_buffer.append((state, action, reward, next_state))
 
 
-
-
-    def training_step(self,batch_size=32):
+    def training_step(self, batch_size=32):
         experiences = self.sample_experiences(batch_size)
-        states, actions, rewards, next_states = experiences  # a changer
+        states, actions, rewards, next_states = experiences
 
-        if self.type_model=='DQN':
+        if self.type_model == 'DQN':
+            # Standard DQN : on utilise uniquement le réseau principal
             next_Q_values = self.model_action.predict(next_states, verbose=0)
-        else :
-            next_Q_values = self.model_action.predict(next_states, verbose=0)  # ≠ target.predict()
-            best_next_actions = next_Q_values.argmax(axis=1)
-            next_mask = tf.one_hot(best_next_actions, self.n_outputs).numpy()
-            max_next_Q_values = (self.model_target.predict(next_states, verbose=0) * next_mask
-                                ).sum(axis=1)
-            next_Q_values = self.model_target.predict(next_states, verbose=0)
+            max_next_Q_values = next_Q_values.max(axis=1)
+        else:
+            # Double DQN et Dueling Double DQN : Sélection de l’action optimale avec le réseau principal
+            best_next_actions = self.model_action.predict(next_states, verbose=0).argmax(axis=1)
 
-        max_next_Q_values = next_Q_values.max(axis=1)
+            # Évaluation de la valeur de cette action avec le réseau target
+            next_Q_values_target = self.model_target.predict(next_states, verbose=0)
+            max_next_Q_values = next_Q_values_target[np.arange(batch_size), best_next_actions]  # Sélectionne Q(s', a*)
+
         target_Q_values = rewards + self.discount_factor * max_next_Q_values
         target_Q_values = target_Q_values.reshape(-1, 1)
+
         mask = tf.one_hot(actions, self.n_outputs)
+
         with tf.GradientTape() as tape:
             all_Q_values = self.model_action(states)
             Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
@@ -95,6 +96,7 @@ class AgentSumo():
 
         grads = tape.gradient(loss, self.model_action.trainable_variables)
         self.optimizer.apply_gradients(zip(grads, self.model_action.trainable_variables))
+
 
 
     def sample_experiences(self,batch_size):
