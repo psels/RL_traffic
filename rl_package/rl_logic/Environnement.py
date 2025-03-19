@@ -130,6 +130,62 @@ class EnvironnementSumo:
         plt.show()
         ######################################
 
+
+    def classic_simul(self):
+
+        ########## GLOBAL ENV STATE ##########
+        global_wait_time_list = []
+        global_nb_vehicules_list = []
+        global_nb_halting_list = []
+        global_speed_list = []
+        ######################################
+
+
+        for step in range(13000): ## TO CHANGED
+            # if step%WINDOW == WINDOW*0.85:
+            #     traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]]+1)
+            if step%WINDOW == 0:
+                ###############################################################################################
+                global_wait_time = sum(traci.vehicle.getWaitingTime(veh) for veh in traci.vehicle.getIDList())
+                global_nb_vehicules = len(traci.vehicle.getIDList())
+                global_nb_halting = sum(1 for veh in traci.vehicle.getIDList() if traci.vehicle.getWaitingTime(veh) > 0)
+                global_speed = sum(traci.vehicle.getSpeed(veh) for veh in traci.vehicle.getIDList()) / (global_nb_vehicules + 1e-10)
+
+                global_wait_time_list.append(global_wait_time)
+                global_nb_vehicules_list.append(global_nb_vehicules)
+                global_nb_halting_list.append(global_nb_halting)
+                global_speed_list.append(global_speed)
+                #######################################################################################################
+
+            traci.simulationStep()
+        ########## PLOTTING ##########
+        fig, axs = plt.subplots(4, 1, figsize=(10, 15))
+
+        # Plot global wait time
+        axs[0].plot(global_wait_time_list, label='Global Wait Time')
+        axs[0].legend()
+        axs[0].set_title('Global Wait Time')
+
+        # Plot global number of vehicles
+        axs[1].plot(global_nb_vehicules_list, label='Global Number of Vehicles')
+        axs[1].legend()
+        axs[1].set_title('Global Number of Vehicles')
+
+        # Plot global number of halting vehicles
+        axs[2].plot(global_nb_halting_list, label='Global Number of Halting Vehicles')
+        axs[2].legend()
+        axs[2].set_title('Global Number of Halting Vehicles')
+
+        # Plot global speed
+        axs[3].plot(global_speed_list, label='Global Speed')
+        axs[3].legend()
+        axs[3].set_title('Global Speed')
+
+        plt.tight_layout()
+        plt.show()
+        ######################################
+
+
     def get_number_of_junction(self):
         return traci.junction.getIDCount()
 

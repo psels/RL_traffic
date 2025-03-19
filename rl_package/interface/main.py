@@ -68,7 +68,7 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
 
 
     for episode in range(EPISODE):
-        sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--seed', str(episode),  '--scale', str(np.random.uniform(0.1, 0.5))]
+        sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--seed', str(episode),  '--scale', str(np.random.uniform(0.3, 0.6))]
         print(f'🔄 Episode {episode}/{EPISODE}')
         env = EnvironnementSumo(sumoCmd, WINDOW)
 
@@ -142,6 +142,15 @@ def scenario(agents,positions_phases):
     env.full_simul(agents)
 
 
+def classic():
+    """
+    Runs a SUMO classic simulation.
+    """
+    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.5']
+    env = EnvironnementSumo(sumoCmd, WINDOW)
+    env.classic_simul()
+
+
 def get_args():
     """
     Handles command-line arguments.
@@ -152,7 +161,11 @@ def get_args():
     parser.add_argument("--evaluate", action="store_true", help="Run a simulation with a trained models.")
     parser.add_argument("--model", type=str, choices=["DQN", "2DQN", "3DQN"], default="DQN",
                         help="Model type: DQN, 2DQN, or 3DQN")
+    parser.add_argument("--classic", action="store_true", help="Run a classic simulation without reinforcement learning.")
     return parser.parse_args()
+
+
+
 
 
 if __name__ == '__main__':
@@ -167,5 +180,7 @@ if __name__ == '__main__':
     elif args.evaluate:
         agents = load_trained_agents(inputs_per_agents, outputs_per_agents, type_model)
         scenario(agents,positions_phases)
+    elif args.classic:
+        classic()
     else:
         print("❌ Specify --train to train the model or --evaluate to run a simulation.")
