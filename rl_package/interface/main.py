@@ -32,7 +32,7 @@ def preprocess():
     for trafficlight in env.trafficlights_ids:
         # Get the number of lanes controlled by this traffic light
         n_lanes = len(env.control_lanes(trafficlight))
-        inputs_per_agents.append(n_lanes * 2)  # Inputs: queue + vehicle count
+        inputs_per_agents.append(n_lanes * 3)  # Inputs: queue + vehicle count
 
         # Get the number of valid traffic light phases (excluding yellow)
         n_phases,position = env.get_phase_without_yellow(trafficlight)

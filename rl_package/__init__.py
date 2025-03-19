@@ -8,6 +8,7 @@ class DQN(tf.keras.Model):
         self.model = tf.keras.Sequential([
             tf.keras.layers.Dense(128, activation="relu", input_shape=input_shape),
             tf.keras.layers.Dense(128, activation="relu"),
+            tf.keras.layers.Dense(24, activation="relu"),
             tf.keras.layers.Dense(n_outputs)  # Sortie unique avec Q(s,a) pour chaque action
         ])
 

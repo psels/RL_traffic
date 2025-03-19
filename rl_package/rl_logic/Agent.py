@@ -8,7 +8,7 @@ from rl_package.rl_algorithms.model_DuelingDQN import DuelingDQN
 class AgentSumo():
 
     def __init__(self,type_model,n_inputs, n_outputs,mem_size=MEMORY_MAX_SIZE, epsilon=1.0, epsilon_min=0.01,
-                  discount_factor=0.5):
+                  discount_factor=0.1):
         self.type_model=type_model
         self.model_action=None
         self.model_target=None
@@ -19,9 +19,6 @@ class AgentSumo():
         self.replay_buffer = deque(maxlen=mem_size)
         self.epsilon_min = epsilon_min
         self.discount_factor = discount_factor
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate=0.05)
-        self.loss_fn = tf.keras.losses.MeanSquaredError()
-
 
 
     def build_model(self):
@@ -58,6 +55,8 @@ class AgentSumo():
         else:
             #print(state,type(state),state.shape)
             Q_values = self.model_action.predict(state[np.newaxis], verbose=0)[0]
+            print('state',state)
+            print('Q_values',Q_values)
             return Q_values.argmax()  # optimal action according to the DQN
 
     def add_to_memory(self, state,action,reward, next_state): ######RAJOUTER LE DONE

@@ -56,8 +56,12 @@ class EnvironnementSumo:
             traci.simulationStep()
 
         next_states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
-        n= len(actions)//2
-        rewards = [calculate_reward(states[i][:n],next_states[i][:n]) for i in range(len(actions))]
+        n= len(states[0])//3
+        # print(n)
+        # print(states[0][:n],next_states[0][:n])
+        #print(states[0][:n],next_states)
+        rewards = [calculate_reward(states[i][:2*n],next_states[i][:2*n]) for i in range(len(actions))]
+        #print(f"reward {rewards}\n")
 
         return next_states,rewards
 
@@ -66,6 +70,7 @@ class EnvironnementSumo:
         for step in range(130000): ## TO CHANGED
             if step%2000 == 0:
                 states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
+                #print('states',states)
                 actions = [agent.epsilon_greedy_policy(np.array(states[i]),0) for i,agent in enumerate(agents)]
                 for i,traffic_light in enumerate(self.trafficlights_ids):
                     #traci.trafficlight.setPhase(traffic_light,actions[i]*2)
@@ -78,13 +83,6 @@ class EnvironnementSumo:
 
     def control_lanes(self, traffic_light):
         lane_ids = traci.trafficlight.getControlledLanes(traffic_light)
-        # values = []
-        # for value in lane_ids:
-        #     for j in value:
-        #         for k in j:
-        #             if k not in values:
-        #                 values.append(k)
-        # lane_ids = values
         lanes_unique = []
         for lane in lane_ids:
             if lane not in lanes_unique:
@@ -94,22 +92,23 @@ class EnvironnementSumo:
 
 
     def get_states_per_traffic_light(self, traffic_light):
-
-        # lane_ids = traci.trafficlight.getControlledLinks(traffic_light)
-        # values = []
-        # for value in lane_ids:
-        #     for j in value:
-        #         for k in j:
-        #              if k not in values:
-        #                 values.append(k)
-        # lane_ids = values
         lane_ids = traci.trafficlight.getControlledLanes(traffic_light)
         cleaned_lane_ids = []
         for lane in lane_ids:
             if lane not in cleaned_lane_ids:
                 cleaned_lane_ids.append(lane)
-        return [traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
+        return [round(traci.lane.getWaitingTime(lane_id)/50,2) for lane_id in cleaned_lane_ids] +\
+            [traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
         [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids]
+
+    # def get_states_per_traffic_light(self, traffic_light):
+    #     lane_ids = traci.trafficlight.getControlledLanes(traffic_light)
+    #     cleaned_lane_ids = []
+    #     for lane in lane_ids:
+    #         if lane not in cleaned_lane_ids:
+    #             cleaned_lane_ids.append(lane)
+    #     return [traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
+    #     [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids]
 
 
     def close(self):
