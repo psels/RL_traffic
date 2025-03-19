@@ -32,7 +32,7 @@ def preprocess():
     for trafficlight in env.trafficlights_ids:
         # Get the number of lanes controlled by this traffic light
         n_lanes = len(env.control_lanes(trafficlight))
-        inputs_per_agents.append(n_lanes * 5)  # Inputs: queue + vehicle count
+        inputs_per_agents.append(n_lanes * 2)  # Inputs: queue + vehicle count
 
         # Get the number of valid traffic light phases (excluding yellow)
         n_phases,position = env.get_phase_without_yellow(trafficlight)
@@ -63,11 +63,12 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
                 agent.model_target = tf.keras.models.load_model(model_path)
 
 
-    sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.02']
+
 
 
 
     for episode in range(EPISODE):
+        sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--seed', str(episode),  '--scale', str(np.random.uniform(0.1, 0.5))]
         print(f'🔄 Episode {episode}/{EPISODE}')
         env = EnvironnementSumo(sumoCmd, WINDOW)
 
@@ -75,6 +76,7 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
         env.position_phases = positions_phases
 
         epsilon = max(1 - episode / EPISODE, 0.01)  # Decaying epsilon for exploration
+        #epsilon = max(1 - episode +nb d'episode déja passé/ 50, 0.01)  # Decaying epsilon for exploration
 
         traffic_lights = env.trafficlights_ids
         states = [env.get_states_per_traffic_light(traffic_light) for traffic_light in traffic_lights]
@@ -89,7 +91,7 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
 
             states = next_states
 
-            if len(agents[0].replay_buffer) >= BATCH_SIZE *1:
+            if len(agents[0].replay_buffer) >= BATCH_SIZE * (EPISODE/10):
                 for agent in agents:
                     agent.training_step(BATCH_SIZE)
 
@@ -133,7 +135,7 @@ def scenario(agents,positions_phases):
     Runs a SUMO simulation using the trained agents.
     """
 
-    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.01']
+    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.5']
     env = EnvironnementSumo(sumoCmd, WINDOW)
     #Store the position phases of the trafficlight in the environment
     env.position_phases = positions_phases

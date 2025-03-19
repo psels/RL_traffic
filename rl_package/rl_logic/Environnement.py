@@ -60,27 +60,29 @@ class EnvironnementSumo:
         # print("actions",actions)
         # print("states",states)
         # print("next_states",next_states)
-        n= len(actions)//5
-        rewards = [calculate_reward(states[i][:n],next_states[i][:n]) for i in range(len(actions))]
+        num_lanes_per_agent = [len(states[i])//2 for i in range(len(states))]
+        # print(num_lanes_per_agent)
+        # print(states[0],next_states[0])
+        # print(states[0][:num_lanes_per_agent[0]],next_states[0][:num_lanes_per_agent[0]])
+        rewards = [calculate_reward(states[i][:num_lanes_per_agent[i]],next_states[i][:num_lanes_per_agent[i]]) for i in range(len(actions))]
 
 
         return next_states,rewards
 
 
     def full_simul(self,agents):
-         ########## GLOBAL ENV STATE ##########
-        global_wait_time_list = []
-        global_nb_vehicules_list = []
-        global_nb_halting_list = []
-        global_speed_list = []
-        ######################################
+
         ########## GLOBAL ENV STATE ##########
         global_wait_time_list = []
         global_nb_vehicules_list = []
         global_nb_halting_list = []
         global_speed_list = []
         ######################################
+
+
         for step in range(13000): ## TO CHANGED
+            # if step%WINDOW == WINDOW*0.85:
+            #     traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]]+1)
             if step%WINDOW == 0:
                 states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
                 actions = [agent.epsilon_greedy_policy(np.array(states[i]),0) for i,agent in enumerate(agents)]
@@ -94,10 +96,10 @@ class EnvironnementSumo:
                 global_nb_halting = sum(1 for veh in traci.vehicle.getIDList() if traci.vehicle.getWaitingTime(veh) > 0)
                 global_speed = sum(traci.vehicle.getSpeed(veh) for veh in traci.vehicle.getIDList()) / (global_nb_vehicules + 1e-10)
 
-                global_wait_time_list.append(sum(traci.vehicle.getWaitingTime(veh) for veh in traci.vehicle.getIDList()))
-                global_nb_vehicules_list.append(len(traci.vehicle.getIDList()))
-                global_nb_halting_list.append(sum(1 for veh in traci.vehicle.getIDList() if traci.vehicle.getWaitingTime(veh) > 0))
-                global_speed_list.append(sum(traci.vehicle.getSpeed(veh) for veh in traci.vehicle.getIDList()))
+                global_wait_time_list.append(global_wait_time)
+                global_nb_vehicules_list.append(global_nb_vehicules)
+                global_nb_halting_list.append(global_nb_halting)
+                global_speed_list.append(global_speed)
                 #######################################################################################################
 
             traci.simulationStep()
@@ -160,10 +162,10 @@ class EnvironnementSumo:
         #     print('\n')
 
         return [traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
-            [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids] +\
-            [traci.lane.getLastStepMeanSpeed(lane_id) for lane_id in cleaned_lane_ids] +\
-            [traci.lane.getLastStepOccupancy(lane_id) for lane_id in cleaned_lane_ids] +\
-            [traci.lane.getWaitingTime(lane_id) for lane_id in cleaned_lane_ids]
+            [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids]# +\
+            # [traci.lane.getLastStepMeanSpeed(lane_id) for lane_id in cleaned_lane_ids] +\
+            # [traci.lane.getLastStepOccupancy(lane_id) for lane_id in cleaned_lane_ids] +\
+            # [traci.lane.getWaitingTime(lane_id) for lane_id in cleaned_lane_ids]
 
 
     def close(self):
