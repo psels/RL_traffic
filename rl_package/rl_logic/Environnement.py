@@ -97,9 +97,9 @@ class EnvironnementSumo:
         for lane in lane_ids:
             if lane not in cleaned_lane_ids:
                 cleaned_lane_ids.append(lane)
-        return [round(traci.lane.getWaitingTime(lane_id)/50,2) for lane_id in cleaned_lane_ids] +\
-            [traci.lane.getLastStepHaltingNumber(lane_id) for lane_id in cleaned_lane_ids] +\
-        [traci.lane.getLastStepVehicleNumber(lane_id) for lane_id in cleaned_lane_ids]
+        return [round(traci.lane.getWaitingTime(lane_id)/200,2) for lane_id in cleaned_lane_ids] +\
+            [traci.lane.getLastStepHaltingNumber(lane_id)/2 for lane_id in cleaned_lane_ids] +\
+        [traci.lane.getLastStepVehicleNumber(lane_id)/2 for lane_id in cleaned_lane_ids]
 
     # def get_states_per_traffic_light(self, traffic_light):
     #     lane_ids = traci.trafficlight.getControlledLanes(traffic_light)
