@@ -2,6 +2,7 @@ import traci
 import numpy as np
 import os
 from rl_package.rl_logic.annexe import calculate_reward
+from rl_package.params import WINDOW
 
 
 class EnvironnementSumo:
@@ -67,8 +68,9 @@ class EnvironnementSumo:
 
 
     def full_simul(self,agents):
-        for step in range(130000): ## TO CHANGED
-            if step%2000 == 0:
+        for step in range(13000): ## TO CHANGED
+            if step%WINDOW == 0:
+                print(WINDOW)
                 states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
                 #print('states',states)
                 actions = [agent.epsilon_greedy_policy(np.array(states[i]),0) for i,agent in enumerate(agents)]
