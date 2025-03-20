@@ -55,8 +55,8 @@ class AgentSumo():
         else:
             #print(state,type(state),state.shape)
             Q_values = self.model_action.predict(state[np.newaxis], verbose=0)[0]
-            print('state',state)
-            print('Q_values',Q_values)
+            # print('state',state)
+            # print('Q_values',Q_values)
             return Q_values.argmax()  # optimal action according to the DQN
 
     def add_to_memory(self, state,action,reward, next_state): ######RAJOUTER LE DONE

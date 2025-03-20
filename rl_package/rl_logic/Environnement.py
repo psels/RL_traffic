@@ -2,7 +2,7 @@ import traci
 import numpy as np
 import os
 from rl_package.rl_logic.annexe import calculate_reward
-
+from rl_package.params import WINDOW
 
 class EnvironnementSumo:
     def __init__(self, sumoCmd,window=2000):
@@ -32,15 +32,27 @@ class EnvironnementSumo:
         return len(traci.vehicle.getIDList())
 
 
+    # def get_phase_without_yellow(self,traffic_light):
+    #     "return phases of trafific_light without yellow phase"
+    #     phases = traci.trafficlight.getAllProgramLogics(traffic_light)[0].phases
+    #     long_phases = []
+    #     position = []
+    #     for i,phase in enumerate(phases):
+    #         if "y" not in phase.state:
+    #             long_phases.append(phase)
+    #             position.append(i)
+    #     return long_phases, position
+
     def get_phase_without_yellow(self,traffic_light):
         "return phases of trafific_light without yellow phase"
         phases = traci.trafficlight.getAllProgramLogics(traffic_light)[0].phases
         long_phases = []
         position = []
         for i,phase in enumerate(phases):
-            if "y" not in phase.state:
+            if "y" not in phase.state and ("g" in phase.state or "G" in phase.state):
                 long_phases.append(phase)
                 position.append(i)
+        print(long_phases)
         return long_phases, position
 
 
@@ -52,7 +64,13 @@ class EnvironnementSumo:
             #traci.trafficlight.setPhase(traffic_light,2*actions[i])
             traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
 
-        for _ in range(self.window):
+        for j in range(self.window):
+            if j%5==0:
+                print('ici')
+                for i,traffic_light in enumerate(self.trafficlights_ids):
+                #traci.trafficlight.setPhase(traffic_light,2*actions[i])
+                    traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
+
             traci.simulationStep()
 
         next_states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
@@ -67,13 +85,18 @@ class EnvironnementSumo:
 
 
     def full_simul(self,agents):
-        for step in range(130000): ## TO CHANGED
-            if step%2000 == 0:
+        for step in range(13000): ## TO CHANGED
+            if step%WINDOW == 0:
                 states = [self.get_states_per_traffic_light(traffic_light) for traffic_light in self.trafficlights_ids]
-                #print('states',states)
                 actions = [agent.epsilon_greedy_policy(np.array(states[i]),0) for i,agent in enumerate(agents)]
+
                 for i,traffic_light in enumerate(self.trafficlights_ids):
                     #traci.trafficlight.setPhase(traffic_light,actions[i]*2)
+                    #print(i,len(self.position_phases),len(actions))
+                    traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
+            if step%5==0 and step >30:
+                #print('la',[self.position_phases[i][actions[i]] for i in range(len(actions))])
+                for i,traffic_light in enumerate(self.trafficlights_ids):
                     traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]])
             traci.simulationStep()
 
