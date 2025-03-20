@@ -68,7 +68,7 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
 
 
     for episode in range(EPISODE):
-        sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--seed', str(episode),  '--scale', str(np.random.uniform(0.3, 0.6))]
+        sumoCmd = [SUMO_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--seed', str(episode),  '--scale', str(np.random.uniform(0.5, 2))]
         print(f'🔄 Episode {episode}/{EPISODE}')
         env = EnvironnementSumo(sumoCmd, WINDOW)
 
@@ -135,7 +135,7 @@ def scenario(agents,positions_phases):
     Runs a SUMO simulation using the trained agents.
     """
 
-    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.5']
+    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '2']
     env = EnvironnementSumo(sumoCmd, WINDOW)
     #Store the position phases of the trafficlight in the environment
     env.position_phases = positions_phases
@@ -146,7 +146,7 @@ def classic():
     """
     Runs a SUMO classic simulation.
     """
-    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '0.5']
+    sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', '2']
     env = EnvironnementSumo(sumoCmd, WINDOW)
     env.classic_simul()
 

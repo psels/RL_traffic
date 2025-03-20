@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2019年12月27日 星期五 21时09分10秒 by Eclipse SUMO netedit Version v1_4_0+0055-11695c0903
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+<!-- generated on 2025-03-20 11:09:53 by Eclipse SUMO netedit Version 1.22.0
+<neteditConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/neteditConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/home/yy/traditional_traffic/traditional_traffic.net.xml"/>
+        <sumocfg-file value="/Users/pr/code/psels/RL_traffic/Traffic/Traditional_traffic/traditional_traffic.sumo.cfg"/>
+        <additional-files value=""/>
+        <route-files value="/Users/pr/code/psels/RL_traffic/Traffic/Traditional_traffic/traditional_traffic_asym.rou.xml"/>
+        <sumo-net-file value="/Users/pr/code/psels/RL_traffic/Traffic/Traditional_traffic/traditional_traffic.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/yy/traditional_traffic/traditional_traffic.net.xml"/>
+        <output-file value="/Users/pr/code/psels/RL_traffic/Traffic/Traditional_traffic/traditional_traffic.net.xml"/>
     </output>
 
     <processing>
         <geometry.min-radius.fix.railways value="false"/>
         <geometry.max-grade.fix value="false"/>
         <offset.disable-normalization value="true"/>
-        <lefthand value="false"/>
+        <lefthand value="0"/>
     </processing>
 
     <junctions>
         <no-turnarounds value="true"/>
         <junctions.corner-detail value="5"/>
-        <junctions.limit-turn-speed value="5.5"/>
-        <rectangular-lane-cut value="false"/>
+        <junctions.limit-turn-speed value="5.50"/>
+        <rectangular-lane-cut value="0"/>
     </junctions>
 
     <pedestrian>
-        <walkingareas value="false"/>
+        <walkingareas value="0"/>
     </pedestrian>
 
-    <report>
-        <aggregate-warnings value="5"/>
-    </report>
-
-</configuration>
+</neteditConfiguration>
 -->
 
-<net version="1.3" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
 
     <location netOffset="0.00,0.00" convBoundary="-500.00,-500.00,500.00,500.00" origBoundary="-10000000000.00,-10000000000.00,10000000000.00,10000000000.00" projParameter="!"/>
 
@@ -119,14 +118,14 @@
     </edge>
 
     <tlLogic id="junction" type="static" programID="0" offset="0">
-        <phase duration="30" state="GGrGrrGGrGrr"/>
-        <phase duration="5"  state="gyrgrrgyrgrr"/>
+        <phase duration="20" state="GGrGrrGGrGrr"/>
+        <phase duration="10" state="gyrgrrgyrgrr"/>
         <phase duration="20" state="grGgrrgrGgrr"/>
-        <phase duration="5"  state="grygrrgrygrr"/>
-        <phase duration="30" state="GrrGGrGrrGGr"/>
-        <phase duration="5"  state="grrgyrgrrgyr"/>
+        <phase duration="10" state="grygrrgrygrr"/>
+        <phase duration="20" state="GrrGGrGrrGGr"/>
+        <phase duration="10" state="grrgyrgrrgyr"/>
         <phase duration="20" state="grrgrGgrrgrG"/>
-        <phase duration="5"  state="grrgrygrrgry"/>
+        <phase duration="10" state="grrgrygrrgry"/>
     </tlLogic>
 
     <junction id="end1" type="dead_end" x="0.00" y="500.00" incLanes="junction_end1_0 junction_end1_1 junction_end1_2" intLanes="" shape="0.00,500.00 9.60,500.00 0.00,500.00"/>

@@ -7,7 +7,7 @@
 
     <input>
         <net-file value="city.net.xml"/>
-        <route-files value="city_car_only.rou.xml"/>
+        <route-files value="/Users/pr/code/psels/RL_traffic/Traffic/city_square/city.rou.xml"/>
     </input>
 
     <time>

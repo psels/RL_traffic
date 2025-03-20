@@ -6,7 +6,7 @@ from rl_package.params import WINDOW
 import matplotlib.pyplot as plt
 
 class EnvironnementSumo:
-    def __init__(self, sumoCmd,window=2000):
+    def __init__(self, sumoCmd,window=16000):
         if traci.isLoaded():
             traci.close()
         traci.start(sumoCmd)  # Start SUMO once
@@ -80,7 +80,7 @@ class EnvironnementSumo:
         ######################################
 
 
-        for step in range(13000): ## TO CHANGED
+        for step in range(16000): ## TO CHANGED
             # if step%WINDOW == WINDOW*0.85:
             #     traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]]+1)
             if step%WINDOW == 0:
@@ -128,6 +128,11 @@ class EnvironnementSumo:
 
         plt.tight_layout()
         plt.show()
+
+        print(f"Global Wait Time: {sum(global_wait_time_list)}")
+        print(f"Global Number of Vehicles: {sum(global_nb_vehicules_list)}")
+        print(f"Global Number of Halting Vehicles: {sum(global_nb_halting_list)}")
+        print(f"Mean Global Speed: {mean(global_speed_list)}")
         ######################################
 
 
@@ -141,7 +146,7 @@ class EnvironnementSumo:
         ######################################
 
 
-        for step in range(13000): ## TO CHANGED
+        for step in range(16000): ## TO CHANGED
             # if step%WINDOW == WINDOW*0.85:
             #     traci.trafficlight.setPhase(traffic_light,self.position_phases[i][actions[i]]+1)
             if step%WINDOW == 0:
@@ -183,6 +188,11 @@ class EnvironnementSumo:
 
         plt.tight_layout()
         plt.show()
+
+        print(f"Global Wait Time: {sum(global_wait_time_list)}")
+        print(f"Global Number of Vehicles: {sum(global_nb_vehicules_list)}")
+        print(f"Global Number of Halting Vehicles: {sum(global_nb_halting_list)}")
+        print(f"Mean Global Speed: {(global_speed_list).mean()}")
         ######################################
 
 
