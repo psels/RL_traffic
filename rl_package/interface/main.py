@@ -55,14 +55,14 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
     """
     agents = [AgentSumo(type_model, inputs, outputs) for inputs, outputs in zip(inputs_per_agents, outputs_per_agents)]
 
-    for i, agent in enumerate(agents):
+    ffor i, agent in enumerate(agents):
         agent.build_model()
         model_path = f"models/{NAME_SIMULATION}_{type_model}_Agent{i}.keras"
         if os.path.exists(model_path) and not force_new:
             print(f"Loading pre-trained model for Agent {i} from {model_path}...")
             agent.model_action = tf.keras.models.load_model(model_path)
             if type_model in ["2DQN", "3DQN"]:
-                # 🔥 Clone proprement le modèle cible
+                # Clone the target model
                 agent.model_target = tf.keras.models.clone_model(agent.model_action)
                 agent.model_target.set_weights(agent.model_action.get_weights())
 
@@ -71,8 +71,10 @@ def train_models(inputs_per_agents, outputs_per_agents, position_phases, type_mo
     for episode in range(EPISODE):
         print(f"Episode {episode}/{EPISODE}")
         env = EnvironnementSumo(sumoCmd, WINDOW)
-        env.position_phases = position_phases
-        epsilon = max(1 - episode / EPISODE, 0.01)
+       
+        env.position_phases = positions_phases  #Store the position phases of the trafficlight in the environment
+        epsilon = max(1 - episode / EPISODE, 0.01)  # Decaying epsilon for exploration
+
 
         states = [env.get_states_per_traffic_light(tl) for tl in env.trafficlights_ids]
         for _ in range(50):
@@ -130,6 +132,7 @@ def scenario(agents, positions_phases):
     Launches a full SUMO GUI simulation using the provided agents.
     """
     sumoCmd = [SUMO_GUI_BIN, "-c", SIMUL_CONFIG, '--start', '--no-warnings', '--scale', str(SCALE)]
+
     env = EnvironnementSumo(sumoCmd, WINDOW)
     env.position_phases = positions_phases
     env.full_simul(agents)

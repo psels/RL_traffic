@@ -93,10 +93,8 @@ class EnvironnementSumo:
                 actions = [agent.epsilon_greedy_policy(np.array(states[i]), 0) for i, agent in enumerate(agents)]
                 for i, tl in enumerate(self.trafficlights_ids):
                     traci.trafficlight.setPhase(tl, self.position_phases[i][actions[i]])
-
-            traci.simulationStep()
-
-        print("Simulation finished.")
+                    
+        
 
     def control_lanes(self, traffic_light):
         """
@@ -133,6 +131,7 @@ class EnvironnementSumo:
     def get_total_number_vehicles(self):
         """Returns the total number of vehicles in the simulation."""
         return len(traci.vehicle.getIDList())
+
 
     def close(self):
         """Closes the SUMO simulation and cleans up any active processes."""

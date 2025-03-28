@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
 # Paths to SUMO binaries, read from .env
 SUMO_BIN = os.getenv("SUMO")          # Path to the SUMO binary
 SUMO_GUI_BIN = os.getenv("SUMO-GUI")  # Path to the SUMO GUI binary
@@ -17,4 +16,4 @@ BATCH_SIZE = 32          # Training batch size
 WINDOW = 200             # Number of SUMO steps between each agent decision
 
 # Simulation parameters
-SCALE = 0.5  # Vehicle spawn scaling factor (0.5 = half as many cars as original traffic)
+SCALE = 0.5  # Vehicle spawn scaling factor (0.5 = half as many cars as original traffic
