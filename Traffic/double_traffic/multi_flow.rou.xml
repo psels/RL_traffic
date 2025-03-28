@@ -70,8 +70,7 @@
 	<flow id="car_HF" type="car" route="HF" begin="0" end="86400" probability="0.04" />
 	<flow id="car_HG" type="car" route="HG" begin="0" end="86400" probability="0.04" />
 
-  <!--  <flow id="motorcicle_AC" type="motorcicle" route="AC" begin="0" end="86400" probability="0.01" />
-	<flow id="motorcicle_AD" type="motorcicle" route="AD" begin="0" end="86400" probability="0.01" />
+  <flow id="motorcicle_AD" type="motorcicle" route="AD" begin="0" end="86400" probability="0.01" />
 	<flow id="motorcicle_AF" type="motorcicle" route="AF" begin="0" end="86400" probability="0.01" />
 	<flow id="motorcicle_AG" type="motorcicle" route="AG" begin="0" end="86400" probability="0.01" />
 	<flow id="motorcicle_AH" type="motorcicle" route="AH" begin="0" end="86400" probability="0.01" />
@@ -95,15 +94,15 @@
 	<flow id="motorcicle_GD" type="motorcicle" route="GD" begin="0" end="86400" probability="0.01" />
 	<flow id="motorcicle_GF" type="motorcicle" route="GF" begin="0" end="86400" probability="0.01" />
 	<flow id="motorcicle_GH" type="motorcicle" route="GH" begin="0" end="86400" probability="0.01" />
-	<flow id="motorcicle_HA" type="motorcicle" route="HA" begin="0" end="86400" prob5bility="0.01" />
+
 	<flow id="motorcicle_HC" type="motorcicle" route="HC" begin="0" end="86400" probability="0.01" />
 	<flow id="motorcicle_HD" type="motorcicle" route="HD" begin="0" end="86400" probability="0.01" />
 	<flow id="motorcicle_HF" type="motorcicle" route="HF" begin="0" end="86400" probability="0.01" />
-	<flow id="motorcicle_HG" type="motorcicle" route="HG" begin="0" end="86400" probability="0.01" /> -->
+	<flow id="motorcicle_HG" type="motorcicle" route="HG" begin="0" end="86400" probability="0.01" />
 
 
 
-  <!--<flow id="bus_AC" type="bus" route="AC" begin="0" end="86400" probability="0.0005" />
+  <flow id="bus_AC" type="bus" route="AC" begin="0" end="86400" probability="0.0005" />
 	<flow id="bus_AD" type="bus" route="AD" begin="0" end="86400" probability="0.0005" />
 	<flow id="bus_AF" type="bus" route="AF" begin="0" end="86400" probability="0.0005" />
 	<flow id="bus_AG" type="bus" route="AG" begin="0" end="86400" probability="0.0005" />
@@ -132,10 +131,10 @@
 	<flow id="bus_HC" type="bus" route="HC" begin="0" end="86400" probability="0.0005" />
 	<flow id="bus_HD" type="bus" route="HD" begin="0" end="86400" probability="0.0005" />
 	<flow id="bus_HF" type="bus" route="HF" begin="0" end="86400" probability="0.0005" />
-	<flow id="bus_HG" type="bus" route="HG" begin="0" end="86400" probability="0.0005" />-->
+	<flow id="bus_HG" type="bus" route="HG" begin="0" end="86400" probability="0.0005" />
 
 
-	<!-- <flow id="emergency_AC" type="emergency" route="AC" begin="0" end="86400" probability="0.00051"/>
+	<flow id="emergency_AC" type="emergency" route="AC" begin="0" end="86400" probability="0.00051" />
 	<flow id="emergency_AF" type="emergency" route="AF" begin="0" end="86400" probability="0.00054" />
 	<flow id="emergency_AD" type="emergency" route="AD" begin="0" end="86400" probability="0.00053" />
 	<flow id="emergency_AG" type="emergency" route="AG" begin="0" end="86400" probability="0.00054" />
@@ -164,7 +163,7 @@
 	<flow id="emergency_HC" type="emergency" route="HC" begin="0" end="86400" probability="0.00053" />
 	<flow id="emergency_HD" type="emergency" route="HD" begin="0" end="86400" probability="0.00052" />
 	<flow id="emergency_HF" type="emergency" route="HF" begin="0" end="86400" probability="0.00056" />
-	<flow id="emergency_HG" type="emergency" route="HG" begin="0" end="86400" probability="0.00057" /> -->
+	<flow id="emergency_HG" type="emergency" route="HG" begin="0" end="86400" probability="0.00057" />
 
 
 </routes>
